@@ -16,7 +16,6 @@ import java.util.Collections;
 
 
 @Configuration
-@EnableSwagger2
 public class SwagerConfig {
 
 
