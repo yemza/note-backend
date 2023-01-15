@@ -2,12 +2,17 @@ package com.note.security;
 
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
@@ -27,23 +32,34 @@ import org.springframework.security.core.userdetails.User;
 
 @Configurable
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
 	
 	private RsakeysConfig rsakeysConfig;
 	
-	
+	private PasswordEncoder passwordEncoder;
 
-    public SecurityConfig(RsakeysConfig rsakeysConfig) {
+    public SecurityConfig(RsakeysConfig rsakeysConfig , PasswordEncoder passwordEncoder) {
 		this.rsakeysConfig = rsakeysConfig;
+		this.passwordEncoder =passwordEncoder;
 	}
+    
+    @Bean
+    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService) {
+      var daoAuthProvider =new DaoAuthenticationProvider();
+      daoAuthProvider.setPasswordEncoder(passwordEncoder);
+      daoAuthProvider.setUserDetailsService(userDetailsService);
+	 return new ProviderManager(daoAuthProvider);
+    }
 
+    
 	@Bean
     public UserDetailsService inMemoryUserDetailsManager(){
         return new InMemoryUserDetailsManager(
-                User.withUsername("user1").password(("{noop}1234")).authorities("USER").build(),
-                User.withUsername("user2").password(("{noop}1234")).authorities("USER").build(),
-                User.withUsername("admin").password(("{noop}1234")).authorities("USER","ADMIN").build()
+        	     User.withUsername("user1").password(passwordEncoder.encode("1234")).authorities("USER").build(),
+                 User.withUsername("user2").password(passwordEncoder.encode("1234")).authorities("USER").build(),
+                 User.withUsername("admin").password(passwordEncoder.encode("1234")).authorities("USER","ADMIN").build()
         );
     }
     
@@ -52,6 +68,7 @@ public class SecurityConfig {
 		
 	return http
 			.csrf(csrf -> csrf.disable())
+            .authorizeRequests(auth->auth.antMatchers("/token/**").permitAll())
 		    .authorizeRequests(auth -> auth.anyRequest().authenticated())
 		    .sessionManagement(session ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		    .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

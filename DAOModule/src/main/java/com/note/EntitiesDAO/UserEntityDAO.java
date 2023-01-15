@@ -32,6 +32,9 @@ public class UserEntityDAO {
 	@Column(name="last_name")
 	private String lastName;
 	
+	@Column(name="user_Name")
+	private String userName;
+	
 	@Column(name="email")
 	private String email;
 	
@@ -49,7 +52,8 @@ public class UserEntityDAO {
 	
 
 	
-	public UserEntityDAO(Long userId, String firstName, String lastName, String email, Set<NoteEntityDAO> userNotes , String password) {
+	public UserEntityDAO(Long userId, String firstName, String lastName, String email, Set<NoteEntityDAO> userNotes , String password,
+			String userName) {
 		super();
 		this.userId = userId;
 		this.firstName = firstName;
@@ -57,6 +61,7 @@ public class UserEntityDAO {
 		this.email = email;
 		this.userNotes = userNotes;
 		this.password = password;
+		this.userName = userName;
 	}
 
 
@@ -93,16 +98,18 @@ public class UserEntityDAO {
 		this.userNotes = userNotes;
 	}
 
-
-
 	public String getPassword() {
 		return password;
 	}
-
-
-
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	
