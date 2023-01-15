@@ -1,4 +1,4 @@
-package com.note.EntitiesDAO;
+package com.note.entitiesDAO;
 
 import java.util.Set;
 
@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author hamza.elbouazzaoui
@@ -34,6 +36,7 @@ public class UserEntityDAO {
 	private String email;
 	
 	@OneToMany(mappedBy="noteUser")
+	@JsonIgnore
 	private Set<NoteEntityDAO> userNotes;
 	
 	public UserEntityDAO() {

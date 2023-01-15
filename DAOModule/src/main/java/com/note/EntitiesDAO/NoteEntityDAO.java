@@ -1,4 +1,4 @@
-package com.note.EntitiesDAO;
+package com.note.entitiesDAO;
 
 import java.util.Date;
 
@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author hamza.elbouazzaoui
@@ -48,14 +50,13 @@ public class NoteEntityDAO {
 	
 
 	public NoteEntityDAO(Long noteId, String noteTitle, String noteDescription, Date noteWrittenDate,
-			Date noteModifiedDate, UserEntityDAO noteUser) {
+			Date noteModifiedDate) {
 		super();
 		this.noteId = noteId;
 		this.noteTitle = noteTitle;
 		this.noteDescription = noteDescription;
 		this.noteWrittenDate = noteWrittenDate;
 		this.noteModifiedDate = noteModifiedDate;
-		this.noteUser = noteUser;
 	}
 
 	public Long getNoteId() {

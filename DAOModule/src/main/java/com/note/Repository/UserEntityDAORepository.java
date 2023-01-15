@@ -1,8 +1,8 @@
-package com.note.Repository;
+package com.note.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.note.EntitiesDAO.UserEntityDAO;
+import com.note.entitiesDAO.UserEntityDAO;
 
 public interface UserEntityDAORepository extends JpaRepository<UserEntityDAO, Long> {
 
