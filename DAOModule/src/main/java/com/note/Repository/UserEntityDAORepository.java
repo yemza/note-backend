@@ -6,4 +6,6 @@ import com.note.entitiesDAO.UserEntityDAO;
 
 public interface UserEntityDAORepository extends JpaRepository<UserEntityDAO, Long> {
 
+	UserEntityDAO findByUserName(String username);
+
 }

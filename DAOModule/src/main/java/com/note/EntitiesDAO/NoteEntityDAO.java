@@ -40,6 +40,7 @@ public class NoteEntityDAO {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id" , nullable = false)
+	@JsonIgnore
 	private UserEntityDAO noteUser;
 
 	
