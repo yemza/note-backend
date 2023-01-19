@@ -46,8 +46,8 @@ public class NoteControler {
 	 * get All note by user Id
 	 * */
 	@GetMapping("/getAllNoteByUserId")
-	public List<NoteEntityDAO> getAllNoteByUserId(Long noteId) {
-       return noteService.getAllNoteByUserId(noteId);
+	public List<NoteEntityDAO> getAllNoteByUserId(Long userId) {
+       return noteService.getAllNoteByUserId(userId);
 	}
 	
 	

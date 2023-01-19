@@ -1,5 +1,6 @@
 package com.note.entitiesDAO;
 
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -10,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -18,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name="users")
-public class UserEntityDAO {
+public class UserEntityDAO implements UserDetails{
 
 	
 	@Id
@@ -35,9 +39,20 @@ public class UserEntityDAO {
 	@Column(name="email")
 	private String email;
 	
+	@Column(name="username")
+	private String userName;
+	
+	@Column(name="password")
+	@JsonIgnore
+	private String password;
+	
 	@OneToMany(mappedBy="noteUser")
 	@JsonIgnore
 	private Set<NoteEntityDAO> userNotes;
+	
+	@Column(name="role")
+	private String role;
+
 	
 	public UserEntityDAO() {
         super();
@@ -45,13 +60,15 @@ public class UserEntityDAO {
 	
 
 	
-	public UserEntityDAO(Long userId, String firstName, String lastName, String email, Set<NoteEntityDAO> userNotes) {
+	public UserEntityDAO(Long userId, String firstName, String lastName, String email, Set<NoteEntityDAO> userNotes,String userName,String password) {
 		super();
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.userNotes = userNotes;
+		this.userName = userName;
+		this.password = password;
 	}
 
 
@@ -86,6 +103,88 @@ public class UserEntityDAO {
 
 	public void setUserNotes(Set<NoteEntityDAO> userNotes) {
 		this.userNotes = userNotes;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+
+	public String getRole() {
+		return role;
+	}
+
+
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

@@ -35,9 +35,9 @@ public class NoteServiceImpl implements NoteService {
 
 
 	@Override
-	public List<NoteEntityDAO> getAllNoteByUserId(Long noteId) {
+	public List<NoteEntityDAO> getAllNoteByUserId(Long userId) {
 		// TODO Auto-generated method stub
-		return noteEntityDAORepository.findAllByNoteUserUserId(noteId);
+		return noteEntityDAORepository.findAllByNoteUserUserId(userId);
 	}
 
 }

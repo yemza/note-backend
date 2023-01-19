@@ -1,4 +1,4 @@
-package com.note.swagerConfig;
+package com.note.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
