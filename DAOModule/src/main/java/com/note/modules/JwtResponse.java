@@ -1,7 +1,7 @@
 package com.note.modules;
 
 public class JwtResponse {
-	
+	private Long userId;
 	private String username;
 	private String accessToken;
 
@@ -13,13 +13,26 @@ public class JwtResponse {
 
 
 
-	public JwtResponse(String username, String accessToken) {
+	public JwtResponse( Long userId,String username, String accessToken) {
 		super();
+		this.userId = userId;
 		this.username = username;
 		this.accessToken = accessToken;
 	}
 
 
+
+
+
+	public Long getUserId() {
+		return userId;
+	}
+
+
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
 
 

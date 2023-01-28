@@ -8,4 +8,5 @@ public interface UserEntityDAORepository extends JpaRepository<UserEntityDAO, Lo
 
 	UserEntityDAO findByUsername(String username);
 
+
 }

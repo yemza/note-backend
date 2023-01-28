@@ -1,7 +1,6 @@
 package com.note.utils;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -21,11 +20,13 @@ public class TokenUtility {
 	private Algorithm TOKEN_SECRET = Algorithm.HMAC256("NoteSecret12345");
 
 	
-	public String generateAccessToken ( UserDetails user) {
+	public String generateAccessToken ( UserDetails user , Long userId) {
+		
 	 String jwtAccessToken = JWT.create()
         		.withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis()+5*60*1000))
         		.withClaim("roles", user.getAuthorities().stream().map(role-> role.getAuthority()).collect(Collectors.toList()))
+        		.withClaim("userId", userId)
         		.sign(TOKEN_SECRET);
 	 return jwtAccessToken;
 		

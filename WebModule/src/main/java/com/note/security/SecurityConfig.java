@@ -1,6 +1,8 @@
 package com.note.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,9 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
+import org.springframework.web.cors.CorsConfiguration;
 import com.note.filters.AuthentificationRequestFilter;
-import com.note.services.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -26,7 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
   
     	 http
-    	.cors()
+    	.cors().configurationSource(request -> {
+    		  CorsConfiguration cors = new CorsConfiguration();
+    	      cors.setAllowedOrigins(List.of("http://localhost:4200", "http://127.0.0.1:80", "http://example.com"));
+    	      cors.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "OPTIONS"));
+    	      cors.setAllowedHeaders(List.of("*"));
+    	      return cors;
+    	    })
     	.and()
     	.csrf()
     	.disable()
@@ -34,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     	.and()
     	.authorizeRequests()
-    	.antMatchers("/authenticate")
+    	.antMatchers(PUPLIC_ENDPOINTS)
     	.permitAll()
     	.anyRequest()
     	.authenticated()
@@ -56,5 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	return new AuthentificationRequestFilter();
 
 	}
+    
 
+    
 }

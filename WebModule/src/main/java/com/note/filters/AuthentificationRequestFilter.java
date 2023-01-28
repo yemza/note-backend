@@ -15,9 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.note.services.UserService;
 import com.note.services.impl.AuthServiceImpl;
-import com.note.services.impl.UserServiceImpl;
 import com.note.utils.TokenUtility;
 
 public class AuthentificationRequestFilter extends OncePerRequestFilter {
@@ -30,10 +28,6 @@ public class AuthentificationRequestFilter extends OncePerRequestFilter {
 
 	private AuthServiceImpl authServiceImpl;
 	
-
-
-
-
 
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException {

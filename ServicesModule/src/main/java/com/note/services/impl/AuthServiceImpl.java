@@ -10,12 +10,15 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.note.entitiesDAO.UserEntityDAO;
 import com.note.repository.UserEntityDAORepository;
-import com.note.services.UserService;
+import com.note.services.AuthService;
 
-public class AuthServiceImpl implements UserService, UserDetailsService {
+
+@Service
+public class AuthServiceImpl implements AuthService, UserDetailsService {
 
 	@Autowired
 	UserEntityDAORepository userEntityDAORepository;
