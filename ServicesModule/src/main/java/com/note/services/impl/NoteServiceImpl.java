@@ -40,4 +40,12 @@ public class NoteServiceImpl implements NoteService {
 		return noteEntityDAORepository.findAllByNoteUserUserId(userId);
 	}
 
+
+
+	@Override
+	public NoteEntityDAO saveNewNote(NoteEntityDAO newNote) {
+		
+		return noteEntityDAORepository.save(newNote);
+	}
+
 }

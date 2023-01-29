@@ -24,7 +24,7 @@ public class TokenUtility {
 		
 	 String jwtAccessToken = JWT.create()
         		.withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+100*60*1000))
+                .withExpiresAt(new Date(System.currentTimeMillis()+100000*60*1000))
         		.withClaim("roles", user.getAuthorities().stream().map(role-> role.getAuthority()).collect(Collectors.toList()))
         		.withClaim("userId", userId)
         		.sign(TOKEN_SECRET);
