@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.note.services.AuthService;
 import com.note.services.impl.AuthServiceImpl;
 import com.note.utils.TokenUtility;
 
@@ -26,7 +27,8 @@ public class AuthentificationRequestFilter extends OncePerRequestFilter {
 	private TokenUtility tokenUtility;
 
 
-	private AuthServiceImpl authServiceImpl;
+	@Autowired
+	private AuthService authService;
 	
 
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -42,7 +44,7 @@ public class AuthentificationRequestFilter extends OncePerRequestFilter {
 			String token = authorizationHeader.substring("Bearer ".length());
 			String username = tokenUtility.getUserNameFromToken(token);
 			if (username != null) {
-				UserDetails user = authServiceImpl .loadUserByUsername(username);
+				UserDetails user = authService.loadUserByUsername(username);
 				if (tokenUtility.isTokenValid(token, user)) {
 					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 							username, null, user.getAuthorities());
